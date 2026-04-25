@@ -1,24 +1,34 @@
 const express = require("express");
-
+const connectDB = require("./config/database");
+const User = require("./models/user.schema");
 const app = express();
-const { adminAuth } = require("./middleware/auth");
 
-app.use("/admin", adminAuth);
+app.post("/signup", async (req, res) => {
+  const user = new User({
+    firstName: "Vijay",
+    lastName: "Mishra",
+    email: "vijay@gmail.com",
+    gender: "Male",
+    password: "12345678",
+  });
 
-app.get("/admin/getAllData", (req, res) => {
   try {
-    res.send("All Data sent");
+    await user.save();
+    res.send("User created successfully");
   } catch (err) {
-    res.status(500).send("Internal Server Error");
+    console.log("Some error occuring");
   }
 });
 
-app.get("/admin/deleteuser", (req, res) => {
-  res.send("User Deleted");
-});
+connectDB()
+  .then(() => {
+    console.log("Database connection is stablised");
+    app.listen(3000, () => {
+      console.log("Server is running on port 3000");
+    });
+  })
+  .catch((err) => {
+    res.status(400).send("Error saving the user",err.message);
+  });
 
-app.listen(3000, () => {
-  console.log("Server is running on port 3000");
-});
-
-module.exports = app;
+//module.exports = app;

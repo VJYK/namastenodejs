@@ -9,4 +9,4 @@ const adminAuth = (req,res)=>{
     res.status(403).send("Unauthorized Access");
   }
 }
-module.exports = adminAuth;
+module.exports = {adminAuth};

@@ -1,0 +1,7 @@
+- create cluster on mongodb free website atlas
+- Install mongoose
+- connect applcaition to database 
+- create user schema and user model
+- create post signup to add data into database
+- push some documents through postman
+- error handling using try catch
