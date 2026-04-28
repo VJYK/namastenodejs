@@ -19,3 +19,4 @@
 - Data sanitizing-  add api validation for each field
 
 - Install validator package : npm i validator
+- Never trust req.body
