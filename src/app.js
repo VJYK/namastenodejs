@@ -34,43 +34,43 @@ app.get("/users", async (req, res) => {
 });
 
 // Get feed of user
-app.get('/feed',async (req,res)=>{
-  try{
+app.get("/feed", async (req, res) => {
+  try {
     const users = await User.find({});
-    if(users.length===0){
-      res.status(400).send("User not found")
-    }else{
+    if (users.length === 0) {
+      res.status(400).send("User not found");
+    } else {
       res.send(users);
     }
-  }catch(err){
-    res.status(404).send('Somthing went wrong')
+  } catch (err) {
+    res.status(404).send("Somthing went wrong");
   }
-})
+});
 
 // Delete User by Id
-app.delete("/users",async (req,res)=>{
-  const id=  req.body._id
-  try{
-    const userId =  await User.findByIdAndDelete(id);
+app.delete("/users", async (req, res) => {
+  const id = req.body._id;
+  try {
+    const userId = await User.findByIdAndDelete(id);
     res.status(200).send("User deleted successfully");
-  }catch(err){
-    res.status(404).send('Something went wrong')
+  } catch (err) {
+    res.status(404).send("Something went wrong");
   }
-})
+});
 
-// Update User Data of user 
+// Update User Data of user
 
-app.patch("/user",async (req,res)=>{
+app.patch("/user", async (req, res) => {
   const userId = req.body.userId;
   const data = req.body;
 
   try {
-    const user = await User.findByIdAndUpdate({_id:userId},data);
-    res.send(user)
+    const user = await User.findByIdAndUpdate({ _id: userId }, data,{runValidators:true,returnDocument:true});
+    res.send(user);
   } catch (error) {
-    res.status(404).send("Something went wrong ")
+    res.status(404).send("Something went wrong ");
   }
-})
+});
 connectDB()
   .then(() => {
     console.log("Database connection is stablised");
